@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 
 async function refreshAccessToken(token) {
   try {
-    const response = await fetch(`${process.env.API_URL}/api/token/refresh/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/token/refresh/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
