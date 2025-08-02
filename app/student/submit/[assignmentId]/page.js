@@ -78,7 +78,7 @@ export default function SubmitAssignment() {
             </svg>
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Access Denied</h3>
-          <p className="text-gray-600">You don't have permission to access this page.</p>
+          <p className="text-gray-600">You don&apos;t have permission to access this page.</p>
         </div>
       </div>
     );
