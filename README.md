@@ -62,7 +62,7 @@ A modern, full-stack web application for managing assignment submissions between
 1. **Clone the repository**
    ```bash
    git clone https://github.com/SRR23/Assignment-Portal-Frontend.git
-   cd assignment-portal
+   cd Assignment-Portal-Frontend
    ```
 
 2. **Install dependencies**
@@ -88,7 +88,7 @@ A modern, full-stack web application for managing assignment submissions between
    ```
 
 5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+   Navigate to [http://localhost:3001](http://localhost:3001)
 
 ## 🎯 Usage
 
