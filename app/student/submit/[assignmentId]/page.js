@@ -252,7 +252,7 @@ export default function SubmitAssignment() {
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                  <p>Double-check that you've included all the requirements mentioned in the assignment</p>
+                  <p>Double-check that you&apos;ve included all the requirements mentioned in the assignment</p>
                 </div>
                 <div className="flex items-start">
                   <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>

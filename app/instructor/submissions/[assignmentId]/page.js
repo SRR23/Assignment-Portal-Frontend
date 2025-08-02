@@ -139,7 +139,7 @@ export default function Submissions() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">No Submissions Yet</h3>
-              <p className="text-gray-600">Students haven't submitted their work for this assignment yet.</p>
+              <p className="text-gray-600">Students haven&apos;t submitted their work for this assignment yet.</p>
             </div>
           ) : (
             submissions.map((submission) => (

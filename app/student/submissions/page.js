@@ -108,7 +108,7 @@ export default function StudentSubmissions() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">No Submissions Yet</h3>
-              <p className="text-gray-600">You haven't submitted any assignments yet. Check available assignments to get started!</p>
+              <p className="text-gray-600">You haven&apos;t submitted any assignments yet. Check available assignments to get started!</p>
             </div>
           ) : (
             submissions.map((submission) => (
@@ -134,9 +134,9 @@ export default function StudentSubmissions() {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Submission URL</label>
-                    <a 
-                      href={submission.submissionUrl} 
-                      target="_blank" 
+                    <a
+                      href={submission.submissionUrl}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:text-blue-700 font-medium break-all inline-flex items-center gap-1"
                     >
@@ -150,7 +150,7 @@ export default function StudentSubmissions() {
                   {submission.note && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Your Note</label>
-                      <p className="text-gray-600 bg-gray-50 p-3 rounded-lg">{submission.note}</p>
+                      <p className="text-gray-600 bg-gray-50 p-3 rounded-lg">{submission.note.replace(/'/g, '&apos;')}</p>
                     </div>
                   )}
 
@@ -162,7 +162,7 @@ export default function StudentSubmissions() {
                           <svg className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                           </svg>
-                          <p className="text-gray-700">{submission.feedback}</p>
+                          <p className="text-gray-700">{submission.feedback.replace(/'/g, '&apos;')}</p>
                         </div>
                       </div>
                     </div>

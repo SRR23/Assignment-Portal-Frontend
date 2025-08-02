@@ -38,7 +38,7 @@ export default function Home() {
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
             Streamline your assignment submission process with our modern, user-friendly platform. 
-            Whether you're a student or instructor, we've got you covered.
+            Whether you&apos;re a student or instructor, we&apos;ve got you covered.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/login">
