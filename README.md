@@ -61,7 +61,7 @@ A modern, full-stack web application for managing assignment submissions between
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/assignment-portal.git
+   git clone https://github.com/SRR23/Assignment-Portal-Frontend.git
    cd assignment-portal
    ```
 
@@ -73,17 +73,11 @@ A modern, full-stack web application for managing assignment submissions between
    ```
 
 3. **Environment Configuration**
-   Create a `.env.local` file in the root directory:
+   Create a `.env` file in the root directory:
    ```env
-   # Authentication
-   NEXTAUTH_SECRET=your-secret-key-here
-   NEXTAUTH_URL=http://localhost:3000
-
-   # API Configuration
-   NEXT_PUBLIC_API_URL=http://localhost:3000
-
-   # Database (configure as needed)
-   DATABASE_URL=your-database-url
+   NEXT_PUBLIC_API_URL = API endpoint URL
+   NEXTAUTH_SECRET = secret-key
+   NEXTAUTH_URL = Base URL for authentication
    ```
 
 4. **Run the development server**
@@ -140,11 +134,3 @@ assignment-portal/
 ├── package.json              # Dependencies and scripts
 └── README.md                 # Project documentation
 ```
-
-## 🔧 Configuration
-
-### Environment Variables
-- `NEXTAUTH_SECRET` - Secret key for NextAuth.js
-- `NEXTAUTH_URL` - Base URL for authentication
-- `NEXT_PUBLIC_API_URL` - API endpoint URL
-- `DATABASE_URL` - Database connection string
