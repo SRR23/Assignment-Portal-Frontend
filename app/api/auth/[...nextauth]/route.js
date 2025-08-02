@@ -22,7 +22,7 @@ async function refreshAccessToken(token) {
     return {
       ...token,
       accessToken: refreshedTokens.accessToken,
-      accessTokenExpires: Date.now() + 60 * 60 * 1000, // 1 hour
+      accessTokenExpires: Date.now() + 5 * 60 * 1000, // 5 minutes
       refreshToken: refreshedTokens.refreshToken ?? token.refreshToken,
     };
   } catch (error) {
@@ -77,20 +77,23 @@ export const authOptions = {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.role = user.role;
-        token.accessTokenExpires = Date.now() + 60 * 60 * 1000; // 1 hour
+        token.username = user.name; // Store username from user.name
+        token.accessTokenExpires = Date.now() + 5 * 60 * 1000; // 5 minutes
       }
 
       // Return previous token if the access token has not expired yet
-      if (Date.now() < token.accessTokenExpires) {
+      // Refresh token 30 seconds before expiration to ensure smooth operation
+      if (Date.now() < token.accessTokenExpires - 30 * 1000) {
         return token;
       }
 
-      // Access token has expired, try to update it
+      // Access token is about to expire or has expired, try to update it
       return refreshAccessToken(token);
     },
     async session({ session, token }) {
       session.user.id = token.sub;
       session.user.role = token.role;
+      session.user.username = token.username; // Add username to session
       session.accessToken = token.accessToken;
       session.error = token.error;
       return session;

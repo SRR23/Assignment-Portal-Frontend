@@ -24,10 +24,13 @@ export function useApi() {
       
       // If token is expired, try to refresh
       if (response.status === 401) {
+        console.log('Token expired, attempting refresh...');
+        
         // Update session to trigger token refresh
         const newSession = await update();
         
         if (newSession?.accessToken) {
+          console.log('Token refreshed successfully, retrying request...');
           // Retry the request with new token
           const retryConfig = {
             ...config,
@@ -36,9 +39,16 @@ export function useApi() {
               Authorization: `Bearer ${newSession.accessToken}`,
             },
           };
-          return await fetch(url, retryConfig);
+          const retryResponse = await fetch(url, retryConfig);
+          
+          // If retry also fails, throw error
+          if (retryResponse.status === 401) {
+            throw new Error('Authentication failed after token refresh');
+          }
+          
+          return retryResponse;
         } else {
-          throw new Error('Failed to refresh token');
+          throw new Error('Failed to refresh token - user may need to re-authenticate');
         }
       }
       

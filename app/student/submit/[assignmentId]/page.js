@@ -193,7 +193,7 @@ export default function SubmitAssignment() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Additional Notes (Optional)
+                    Additional Notes
                   </label>
                   <div className="relative">
                     <div className="absolute top-3 left-3 flex items-start pointer-events-none">
