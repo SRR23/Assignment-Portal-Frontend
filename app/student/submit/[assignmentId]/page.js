@@ -1,15 +1,38 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 
 export default function SubmitAssignment() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { assignmentId } = useParams();
+  const router = useRouter();
   const [submissionUrl, setSubmissionUrl] = useState('');
   const [note, setNote] = useState('');
   const [error, setError] = useState('');
-  const router = useRouter();
+  const [assignmentTitle, setAssignmentTitle] = useState('');
+
+  useEffect(() => {
+    const fetchAssignment = async () => {
+      if (status === 'authenticated' && assignmentId) {
+        try {
+          const res = await fetch(`http://localhost:3000/api/assignments/${assignmentId}`, {
+            headers: {
+              Authorization: `Bearer ${session.accessToken}`,
+            },
+          });
+          if (!res.ok) throw new Error('Failed to fetch assignment');
+          const data = await res.json();
+          setAssignmentTitle(data.title || 'Untitled Assignment');
+        } catch (err) {
+          setError('Error fetching assignment details');
+          console.error(err);
+        }
+      }
+    };
+
+    fetchAssignment();
+  }, [assignmentId, session, status]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,10 +56,20 @@ export default function SubmitAssignment() {
     }
   };
 
+  if (status === 'loading') {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
+
+  if (!session || session.user.role !== 'student') {
+    return <div className="min-h-screen flex items-center justify-center">Access denied</div>;
+  }
+
   return (
     <div className="min-h-screen p-8 bg-gray-100">
       <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
-        <h2 className="text-2xl font-bold mb-6">Submit Assignment</h2>
+        <h2 className="text-2xl font-bold mb-4">Submit Assignment</h2>
+        <h3 className="text-xl font-semibold mb-4">Assignment: {assignmentTitle}</h3>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700">Submission URL</label>
@@ -56,7 +89,6 @@ export default function SubmitAssignment() {
               className="w-full p-2 border rounded"
             />
           </div>
-          {error && <p className="text-red-500 mb-4">{error}</p>}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"

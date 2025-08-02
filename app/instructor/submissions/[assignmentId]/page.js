@@ -19,6 +19,7 @@ export default function Submissions() {
       });
       const data = await res.json();
       setSubmissions(data);
+      console.log(data);
     };
     if (session) fetchSubmissions();
   }, [session, assignmentId]);
@@ -57,7 +58,7 @@ export default function Submissions() {
         <div className="grid gap-4">
           {submissions.map((submission) => (
             <div key={submission.id} className="bg-white p-4 rounded shadow">
-              <p><strong>Student:</strong> {submission.studentName}</p>
+              <p><strong>Student:</strong> {submission.student.username}</p>
               <p><strong>Submission URL:</strong> <a href={submission.submissionUrl} className="text-blue-500">{submission.submissionUrl}</a></p>
               <p><strong>Note:</strong> {submission.note}</p>
               <p><strong>Status:</strong> {submission.status}</p>

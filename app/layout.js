@@ -1,4 +1,5 @@
 import AuthProvider from './provider';
+import Navbar from './components/Navbar';
 import './globals.css';
 
 export const metadata = {
@@ -10,7 +11,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <Navbar />
+          <main className="pt-16 min-h-screen">{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 'use client';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
@@ -96,16 +96,6 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen p-8 bg-gray-100">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <button
-            onClick={() => signOut({ callbackUrl: '/login' })}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-          >
-            Logout
-          </button>
-        </div>
-
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
         {session?.user?.role === 'instructor' && (
@@ -126,6 +116,17 @@ export default function Dashboard() {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {session?.user?.role === 'student' && (
+          <div className="mb-8">
+            <Link
+              href="/student/submissions"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              My Submissions
+            </Link>
           </div>
         )}
 
