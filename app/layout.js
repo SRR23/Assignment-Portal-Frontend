@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <AuthProvider>
           <Navbar />
-          <main className="pt-16 min-h-screen">{children}</main>
+          <main className="pt-20">{children}</main>
         </AuthProvider>
       </body>
     </html>

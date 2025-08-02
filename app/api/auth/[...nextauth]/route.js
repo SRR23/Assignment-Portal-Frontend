@@ -1,6 +1,39 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
+async function refreshAccessToken(token) {
+  try {
+    const response = await fetch(`${process.env.API_URL}/api/token/refresh/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        refreshToken: token.refreshToken,
+      }),
+    });
+
+    const refreshedTokens = await response.json();
+
+    if (!response.ok) {
+      throw refreshedTokens;
+    }
+
+    return {
+      ...token,
+      accessToken: refreshedTokens.accessToken,
+      accessTokenExpires: Date.now() + 60 * 60 * 1000, // 1 hour
+      refreshToken: refreshedTokens.refreshToken ?? token.refreshToken,
+    };
+  } catch (error) {
+    console.error('Error refreshing token:', error);
+    return {
+      ...token,
+      error: 'RefreshAccessTokenError',
+    };
+  }
+}
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -11,7 +44,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
-          const res = await fetch('http://localhost:3000/api/login', {
+          const res = await fetch(`${process.env.API_URL}/api/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -38,18 +71,28 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
+        // Initial sign in
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.role = user.role;
+        token.accessTokenExpires = Date.now() + 60 * 60 * 1000; // 1 hour
       }
-      return token;
+
+      // Return previous token if the access token has not expired yet
+      if (Date.now() < token.accessTokenExpires) {
+        return token;
+      }
+
+      // Access token has expired, try to update it
+      return refreshAccessToken(token);
     },
     async session({ session, token }) {
       session.user.id = token.sub;
       session.user.role = token.role;
       session.accessToken = token.accessToken;
+      session.error = token.error;
       return session;
     },
   },
