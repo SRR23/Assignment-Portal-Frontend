@@ -93,7 +93,7 @@ A modern, full-stack web application for managing assignment submissions between
 ## 🎯 Usage
 
 ### Student Workflow
-1. **Register/Login** - Create an account or sign in
+1. **Register/Login** - Create an Student account or sign in
 2. **Browse Assignments** - View available assignments on the dashboard
 3. **Submit Work** - Click "Submit Assignment" and provide your work URL
 4. **Track Progress** - Monitor submission status and feedback
